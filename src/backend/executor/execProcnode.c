@@ -155,6 +155,7 @@ ExecInitNode(Plan *node, EState *estate, int eflags)
 	 */
 	check_stack_depth();
 
+    printf("%d node\n", node->type);
 	switch (nodeTag(node))
 	{
 			/*

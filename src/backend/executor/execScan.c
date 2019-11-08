@@ -122,18 +122,23 @@ ExecScan(ScanState *node,
 		 ExecScanAccessMtd accessMtd,	/* function returning a tuple */
 		 ExecScanRecheckMtd recheckMtd)
 {
-	FILE *file = fopen("/home/low_key/test.bin", "r+b");
-	FILE *file1 = fopen("/home/low_key/out", "w+");
+	FILE *file = fopen("/home/sourab/Projects/postgres/num_tuples.bin", "r+b");
+	FILE *progress_file = fopen("/home/sourab/Projects/postgres/progress.txt", "a");
+	FILE *file2 = fopen("/home/sourab/Projects/postgres/total_num_tup.txt", "r");
 	long int no_of_out_tuples;
-	fseek(file, 0, SEEK_SET);
+    long int total_num_tuples;
+    fscanf(file2, "%ld", &total_num_tuples);
+    fseek(file, 0, SEEK_SET);
 	fread(&no_of_out_tuples, sizeof(long int), 1, file);
-	fseek(file, 0, SEEK_SET);
+    fseek(file, 0, SEEK_SET);
 	no_of_out_tuples++;
 	fwrite(&no_of_out_tuples, sizeof(long int), 1, file);
-	fseek(file1, 0, SEEK_SET);
-	fprintf(file1, "%f", (float)no_of_out_tuples / 100);
+	fprintf(progress_file, "%f\n", (float)no_of_out_tuples / total_num_tuples);
 	fclose(file);
-	fclose(file1);
+	fclose(progress_file);
+	fclose(file2);
+
+
 	ExprContext *econtext;
 	ExprState  *qual;
 	ProjectionInfo *projInfo;

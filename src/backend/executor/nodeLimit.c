@@ -40,6 +40,7 @@ static int64 compute_tuples_needed(LimitState *node);
 static TupleTableSlot *			/* return: a tuple or NULL */
 ExecLimit(PlanState *pstate)
 {
+    printf("Exacuting a limit!");
 	LimitState *node = castNode(LimitState, pstate);
 	ScanDirection direction;
 	TupleTableSlot *slot;
