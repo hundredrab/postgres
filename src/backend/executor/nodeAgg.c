@@ -1565,7 +1565,7 @@ ExecAgg(PlanState *pstate)
 	fseek(file, 0, SEEK_SET);
 	no_of_out_tuples++;
 	fwrite(&no_of_out_tuples, sizeof(long int), 1, file);
- 	fprintf(progress_file, "%f\n", (float)no_of_out_tuples / total_num_tuples);
+ 	fprintf(progress_file, "%f\n", ((float)no_of_out_tuples / total_num_tuples * 100));
 	fclose(file);
 	fclose(progress_file);
 	fclose(file2);
