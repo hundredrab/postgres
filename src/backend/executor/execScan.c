@@ -120,7 +120,7 @@ ExecScanFetch(ScanState *node,
 TupleTableSlot *
 ExecScan(ScanState *node,
 		 ExecScanAccessMtd accessMtd,	/* function returning a tuple */
-		 ExecScanRecheckMtd recheckMtd)    
+		 ExecScanRecheckMtd recheckMtd){  
     FILE *file = fopen("/home/low_key/Projects/postgres/num_tuples.bin", "r+b");
     FILE *progress_file = fopen("/home/low_key/Projects/postgres/progress.txt", "a");
     FILE *file2 = fopen("/home/low_key/Projects/postgres/total_num_tup.txt", "r");
@@ -132,10 +132,10 @@ ExecScan(ScanState *node,
     fseek(file, 0, SEEK_SET);
     no_of_out_tuples++;
     fwrite(&no_of_out_tuples, sizeof(long int), 1, file);
-    fprintf(progress_file, "%f\n", (float)no_of_out_tuples / total_num_tuples);
+    fprintf(progress_file, "%f\n", ((float)no_of_out_tuples / total_num_tuples *  100));
     fclose(file);
     fclose(progress_file);
-    fclose(file2)    
+    fclose(file2);
     ExprContext *econtext;
     ExprState  *qual;
     ProjectionInfo *projInfo;
